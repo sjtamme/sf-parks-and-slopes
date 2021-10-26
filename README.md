@@ -21,7 +21,7 @@ With San Francisco being known for its hills, I thought it would be neat to map 
 * Added labels on top of map
 * Committed work along the way
 
-## Command Prompt Commands Used:
+## Commands Used in Command Line:
 * cd - change directory
 * mkdir - add new directory
 * git status - checking the status of working tree
