@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
 
-    <title>HTML5 Template</title>
+    <title>The Parks & Slopes of San Francisco</title>
 
     <link
   rel="stylesheet"
@@ -74,14 +74,21 @@ const slopesOptions = {
   opacity: 1,
 };
 
+const parksOptions = {
+  color: '#AFE1AF',
+  weight: 1,
+  opacity: 1,
+};
+
 $.when(
   $.getJSON('data/sf-neighborhoods.json'),
-  $.getJSON('data/slopes.json')
-).done(function (neighborhoodsData, slopesData) {
-        drawMap(neighborhoodsData, slopesData);
+  $.getJSON('data/slopes.json'),
+  $.getJSON('data/parks.json')
+).done(function (neighborhoodsData, slopesData, parksData) {
+        drawMap(neighborhoodsData, slopesData, parksData);
       });
 
-function drawMap(neighborhoodsData, slopesData) {
+function drawMap(neighborhoodsData, slopesData, parksData) {
 
 L.geoJson(neighborhoodsData, {
   style: neighborhoodOptions,
@@ -93,11 +100,31 @@ L.geoJson(neighborhoodsData, {
     });
     layer.on('mouseover', function (e) {
       this.setStyle({
-        fillOpacity: 0.1,
+        fillOpacity: 0.8,
       });
     });
     layer.on('mouseout', function (e) {
       this.setStyle(neighborhoodOptions);
+    });
+  },
+}).addTo(map);
+
+
+L.geoJson(parksData, {
+  style: parksOptions,
+  onEachFeature: function (feature, layer) {
+    let tooltip = feature.properties.map_park_n;
+    layer.bindTooltip(tooltip, {
+      sticky: true,
+      className: 'tooltip',
+    });
+    layer.on('mouseover', function (e) {
+      this.setStyle({
+        fillOpacity: 3,
+      });
+    });
+    layer.on('mouseout', function (e) {
+      this.setStyle(parksOptions);
     });
   },
 }).addTo(map);
