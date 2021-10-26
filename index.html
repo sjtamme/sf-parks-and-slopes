@@ -1,140 +1,133 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
 
-    <title>The Parks & Slopes of San Francisco</title>
+<head>
+  <meta charset="utf-8" />
 
-    <link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-/> 
-    <style>
-      /* CSS rules here */
-      body,
-#map {
-  position: absolute;
-  width: 100%;
-  top: 0;
-  bottom: 0;
-  margin: 0;
-  padding: 0;
-}
-    </style>
-  </head>
+  <title>The Parks & Slopes of San Francisco</title>
 
-  <body>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+  <style>
+    /* CSS rules here */
+    body,
+    #map {
+      position: absolute;
+      width: 100%;
+      top: 0;
+      bottom: 0;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
 
-    <div id="map"></div>
+<body>
 
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-    <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"
-></script>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
 
-    <script>
-      // JavaScript goes here
-      const options = {
-  center: [37.7639, -122.429],
-  zoom: 12.4,
-  minZoom: 12,
-  maxBounds: [
-    [37.911, -122.119],
-    [37.62, -122.772],
-  ],
-};
+  <script>
+    // JavaScript goes here
+    const options = {
+      center: [37.7639, -122.429],
+      zoom: 12.4,
+      minZoom: 12,
+      maxBounds: [
+        [37.911, -122.119],
+        [37.62, -122.772],
+      ],
+    };
 
-const map = L.map('map', options);
+    const map = L.map('map', options);
 
-L.tileLayer(
-  'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
-  {
-    attribution:
-      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-    subdomains: 'abcd',
-    maxZoom: 16,
-  }
-).addTo(map);
+    L.tileLayer(
+      'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+        subdomains: 'abcd',
+        maxZoom: 16,
+      }
+    ).addTo(map);
 
-const neighborhoodOptions = {
-  fillOpacity: 0.3,
-  fillColor: '#e0ecf9',
-  color: '#818589',
-  weight: 1.7,
-  opacity: 1,
-};
+    const neighborhoodOptions = {
+      fillOpacity: 0.3,
+      fillColor: '#e0ecf9',
+      color: '#818589',
+      weight: 1.7,
+      opacity: 1,
+    };
 
-const slopesOptions = {
-  color: '#7393B3',
-  weight: 1,
-  opacity: 1,
-};
+    const slopesOptions = {
+      color: '#7393B3',
+      weight: 1,
+      opacity: 1,
+    };
 
-const parksOptions = {
-  color: '#AFE1AF',
-  weight: 1,
-  opacity: 1,
-};
+    const parksOptions = {
+      color: '#AFE1AF',
+      weight: 1,
+      opacity: 1,
+    };
 
-$.when(
-  $.getJSON('data/sf-neighborhoods.json'),
-  $.getJSON('data/slopes.json'),
-  $.getJSON('data/parks.json')
-).done(function (neighborhoodsData, slopesData, parksData) {
-        drawMap(neighborhoodsData, slopesData, parksData);
-      });
-
-function drawMap(neighborhoodsData, slopesData, parksData) {
-
-L.geoJson(neighborhoodsData, {
-  style: neighborhoodOptions,
-  onEachFeature: function (feature, layer) {
-    let tooltip = feature.properties.name;
-    layer.bindTooltip(tooltip, {
-      sticky: true,
-      className: 'tooltip',
+    $.when(
+      $.getJSON('data/sf-neighborhoods.json'),
+      $.getJSON('data/slopes.json'),
+      $.getJSON('data/parks.json')
+    ).done(function (neighborhoodsData, slopesData, parksData) {
+      drawMap(neighborhoodsData, slopesData, parksData);
     });
-    layer.on('mouseover', function (e) {
-      this.setStyle({
-        fillOpacity: 0.8,
-      });
-    });
-    layer.on('mouseout', function (e) {
-      this.setStyle(neighborhoodOptions);
-    });
-  },
-}).addTo(map);
+
+    function drawMap(neighborhoodsData, slopesData, parksData) {
+
+      L.geoJson(neighborhoodsData, {
+        style: neighborhoodOptions,
+        onEachFeature: function (feature, layer) {
+          let tooltip = feature.properties.name;
+          layer.bindTooltip(tooltip, {
+            sticky: true,
+            className: 'tooltip',
+          });
+          layer.on('mouseover', function (e) {
+            this.setStyle({
+              fillOpacity: 0.8,
+            });
+          });
+          layer.on('mouseout', function (e) {
+            this.setStyle(neighborhoodOptions);
+          });
+        },
+      }).addTo(map);
 
 
-L.geoJson(parksData, {
-  style: parksOptions,
-  onEachFeature: function (feature, layer) {
-    let tooltip = feature.properties.map_park_n;
-    layer.bindTooltip(tooltip, {
-      sticky: true,
-      className: 'tooltip',
-    });
-    layer.on('mouseover', function (e) {
-      this.setStyle({
-        fillOpacity: 3,
-      });
-    });
-    layer.on('mouseout', function (e) {
-      this.setStyle(parksOptions);
-    });
-  },
-}).addTo(map);
+      L.geoJson(parksData, {
+        style: parksOptions,
+        onEachFeature: function (feature, layer) {
+          let tooltip = feature.properties.map_park_n;
+          layer.bindTooltip(tooltip, {
+            sticky: true,
+            className: 'tooltip',
+          });
+          layer.on('mouseover', function (e) {
+            this.setStyle({
+              fillOpacity: 3,
+            });
+          });
+          layer.on('mouseout', function (e) {
+            this.setStyle(parksOptions);
+          });
+        },
+      }).addTo(map);
 
-L.geoJson(slopesData, {
-  style: slopesOptions,
-}).addTo(map);
+      L.geoJson(slopesData, {
+        style: slopesOptions,
+      }).addTo(map);
 
-}
+    }
+  </script>
+</body>
 
-    </script>
-  </body>
 </html>
