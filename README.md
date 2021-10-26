@@ -1,7 +1,7 @@
 sf-parks-and-slopes
 ======
 
-With San Francisco being known for its hills, I thought it would be neat to map the larger slopes in the city along with its parks/recreation areas.
+With San Francisco being known for its hills, I thought it would be neat to map the larger slopes in the city along with the parks/recreation areas.
 
 ## Data used (all from [DataSF](https://datasf.org/opendata/)):
 * San Francisco Neighborhoods - https://data.sfgov.org/Geographic-Locations-and-Boundaries/SF-Find-Neighborhoods/pty2-tcw4
