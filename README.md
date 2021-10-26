@@ -3,10 +3,10 @@ sf-parks-and-slopes
 
 With San Francisco being known for its hills, I thought it would be neat to map the larger slopes in the city along with its parks/recreation areas.
 
-## Data used (all from DataSF):
-San Francisco Neighborhoods - https://data.sfgov.org/Geographic-Locations-and-Boundaries/SF-Find-Neighborhoods/pty2-tcw4
-Slopes of 20 Percent or Greater - https://data.sfgov.org/Geographic-Locations-and-Boundaries/Slopes-of-20-Or-Greater/3vv2-nvev 
-Park/Recreation Land - https://data.sfgov.org/Culture-and-Recreation/Park-Lands-Recreation-and-Parks-Department/42rw-e7xk
+## Data used (all from [DataSF](https://datasf.org/opendata/)):
+* San Francisco Neighborhoods - https://data.sfgov.org/Geographic-Locations-and-Boundaries/SF-Find-Neighborhoods/pty2-tcw4
+* Slopes of 20 Percent or Greater - https://data.sfgov.org/Geographic-Locations-and-Boundaries/Slopes-of-20-Or-Greater/3vv2-nvev 
+* Park/Recreation Land - https://data.sfgov.org/Culture-and-Recreation/Park-Lands-Recreation-and-Parks-Department/42rw-e7xk
 
 ## Process:
 * Inspected data to be used, added data to directory
