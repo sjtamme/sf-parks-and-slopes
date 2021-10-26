@@ -39,8 +39,8 @@
     <script>
       // JavaScript goes here
       const options = {
-  center: [37.7749, -122.419],
-  zoom: 12,
+  center: [37.7639, -122.429],
+  zoom: 12.4,
   minZoom: 12,
   maxBounds: [
     [37.911, -122.119],
@@ -60,13 +60,54 @@ L.tileLayer(
   }
 ).addTo(map);
 
+const neighborhoodOptions = {
+  fillOpacity: 0.3,
+  fillColor: '#e0ecf9',
+  color: '#818589',
+  weight: 1.7,
+  opacity: 1,
+};
+
+const slopesOptions = {
+  color: '#7393B3',
+  weight: 1,
+  opacity: 1,
+};
+
 $.when(
   $.getJSON('data/sf-neighborhoods.json'),
   $.getJSON('data/slopes.json')
 ).done(function (neighborhoodsData, slopesData) {
-  L.geoJson(neighborhoodsData).addTo(map);
-  L.geoJson(slopesData).addTo(map);
-});
+        drawMap(neighborhoodsData, slopesData);
+      });
+
+function drawMap(neighborhoodsData, slopesData) {
+
+L.geoJson(neighborhoodsData, {
+  style: neighborhoodOptions,
+  onEachFeature: function (feature, layer) {
+    let tooltip = feature.properties.name;
+    layer.bindTooltip(tooltip, {
+      sticky: true,
+      className: 'tooltip',
+    });
+    layer.on('mouseover', function (e) {
+      this.setStyle({
+        fillOpacity: 0.1,
+      });
+    });
+    layer.on('mouseout', function (e) {
+      this.setStyle(neighborhoodOptions);
+    });
+  },
+}).addTo(map);
+
+L.geoJson(slopesData, {
+  style: slopesOptions,
+}).addTo(map);
+
+}
+
     </script>
   </body>
 </html>
