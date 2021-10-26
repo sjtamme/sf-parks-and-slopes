@@ -29,6 +29,13 @@
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"
+></script>
+
+
     <script>
       // JavaScript goes here
       const options = {
@@ -52,6 +59,14 @@ L.tileLayer(
     maxZoom: 16,
   }
 ).addTo(map);
+
+$.when(
+  $.getJSON('data/sf-neighborhoods.json'),
+  $.getJSON('data/slopes.json')
+).done(function (neighborhoodsData, slopesData) {
+  L.geoJson(neighborhoodsData).addTo(map);
+  L.geoJson(slopesData).addTo(map);
+});
     </script>
   </body>
 </html>
